@@ -4,7 +4,7 @@ public class SortingObjects {
     public static SortingObject[] createRandom(int size) {
         SortingObject[] sortingObjects = new SortingObject[size];
         for (int i = 0; i < size; i++) {
-            sortingObjects[i] = SortingObject.createRandomObject();
+            sortingObjects[i] = SortingObject.createRandom();
         }
         return sortingObjects;
     }

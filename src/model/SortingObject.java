@@ -27,7 +27,7 @@ public class SortingObject implements Comparable<SortingObject> {
     public String toString() {
         return String.format("Name: %8s, int: %2d, double: %2.2f", name, intValue, doubleValue);
     }
-    public static SortingObject createRandomObject() {
+    public static SortingObject createRandom() {
         String[] names = {"Ivan", "Denys", "Yehor", "Ruslan", "Mykola"};
         String randomName = names[(int) (Math.random() * names.length)];
         int randomInt = (int) (Math.random() * 100);
