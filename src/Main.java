@@ -1,23 +1,34 @@
-import model.Coin;
-import sort.HeapSort;
-import model.SortingObject;
-import model.SortingObjects;
+import speedtest.MultipleTests;
+import speedtest.Result;
+import speedtest.Results;
+import utils.WriteToCSV;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        Coin coin = Coin.randomCoin();
-        System.out.println(coin);
+        int poolSize = 12;
+        int parallelThreshold = 10_000;
 
-        int objectsNumber = 100_000_000;
+        int minObjects = 10_000;
+        int maxObjects = 100_000;
 
-        SortingObject[] sortingObjects = SortingObjects.createRandom(objectsNumber);
-        long startTime = System.nanoTime();
-        HeapSort.sequentialSort(sortingObjects, 0, sortingObjects.length);
-        long endTime = System.nanoTime();
-//        SortingObjects.print(sortingObjects);
-//        System.out.println("=".repeat(50));
-        System.out.println("Is Sorted: " + SortingObjects.isSorted(sortingObjects));
-        System.out.println("Sorting Time: " + ((endTime - startTime) / 1_000_000) + " ms");
+        String filePath = "speedtest_results.csv";
+
+        int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(2)) + 1;
+        Result[] results = new Result[resultsNumber];
+        int testsNumber = 20;
+        int i = 0;
+        for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= 2) {
+            MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, parallelThreshold);
+            tests.run();
+            results[i] = tests.getAverageResult();
+            i++;
+        }
+        Results.display(results);
+
+        List<String[]> data = Results.getResultsStrList(results);
+        WriteToCSV.writeToCsv(filePath, data);
     }
 }

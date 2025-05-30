@@ -5,16 +5,18 @@ import model.SortingObject;
 import java.util.concurrent.RecursiveAction;
 
 public class ParallelAction extends RecursiveAction {
-    private SortingObject[] array;
-    private int start, end;
-    private final int THRESHOLD = 100_000;
-    private int arrayLength;
+    private final SortingObject[] array;
+    private final int start;
+    private final int end;
+    private int THRESHOLD = 10_000;
+    private final int arrayLength;
 
-    public ParallelAction(SortingObject[] array, int start, int end) {
+    public ParallelAction(SortingObject[] array, int start, int end, int Threshold) {
         this.array = array;
         this.start = start;
         this.end = end;
         arrayLength = end - start;
+        this.THRESHOLD = Threshold;
     }
 
     @Override
@@ -24,10 +26,10 @@ public class ParallelAction extends RecursiveAction {
         }
         else {
             int mid = (start + end) / 2;
-            ParallelAction left = new ParallelAction(array, start, mid);
-            ParallelAction right = new ParallelAction(array, mid, end);
-            left.fork();
-
+            ParallelAction left = new ParallelAction(array, start, mid, THRESHOLD);
+            ParallelAction right = new ParallelAction(array, mid, end, THRESHOLD);
+            invokeAll(left, right);
+            HeapSort.merge(array, start, mid, end);
         }
     }
 }

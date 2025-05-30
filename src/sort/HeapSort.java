@@ -73,9 +73,11 @@ public class HeapSort{
             merge(arr, start, mid, end);
         }
     }
-    public static void parallelSort(SortingObject[] arr, int start, int end) {
+    public static void parallelSort(SortingObject[] arr, int start, int end, int poolSize, int threshold) {
+        if (poolSize > 1) {
+            ForkJoinPool pool = new ForkJoinPool(poolSize);
+            pool.invoke(new ParallelAction(arr, start, end, threshold));
+        }
 
-        ForkJoinPool pool = new ForkJoinPool();
-        pool.submit(new ParallelAction(arr, start, end));
     }
 }
