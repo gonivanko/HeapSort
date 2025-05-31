@@ -1,3 +1,5 @@
+package test.sequential;
+
 import model.Product;
 import model.ProductComparators;
 import test.speedtest.MultipleTests;
@@ -8,14 +10,16 @@ import utils.WriteToCSV;
 import java.util.Comparator;
 import java.util.List;
 
-public class Main {
+public class SequentialMultitest {
     public static void main(String[] args) {
-
         int poolSize = 12;
         int heapsortThreshold = 10_000;
 
         int minObjects = 100_000;
         int maxObjects = 1000_000;
+
+        boolean sortSequential = true;
+        boolean sortParallel = false;
 
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
@@ -26,7 +30,7 @@ public class Main {
         int testsNumber = 20;
         int i = 0;
         for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= 2) {
-            MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator);
+            MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator, sortSequential, sortParallel);
             tests.run();
             comparativeResults[i] = tests.getAverageResult();
             i++;

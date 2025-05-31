@@ -1,6 +1,6 @@
-package speedtest;
+package test.speedtest;
 
-public record Result(int objectsNumber, double sequentialTime, double parallelTime, boolean sorted, int poolSize, int parallelThreshold) {
+public record ComparativeResult(int objectsNumber, double sequentialTime, double parallelTime, boolean sorted, int poolSize, int heapsortThreshold) {
     public double getSpeedup() {
         return sequentialTime / parallelTime;
     }
@@ -26,7 +26,7 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
         strArray[1] = String.valueOf(sequentialTime);
         strArray[2] = String.valueOf(parallelTime);
         strArray[3] = String.valueOf(poolSize);
-        strArray[4] = String.valueOf(parallelThreshold);
+        strArray[4] = String.valueOf(heapsortThreshold);
         return strArray;
     }
 

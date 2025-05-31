@@ -1,9 +1,9 @@
 package sort;
 
-import model.SortingObject;
+import model.Product;
 
 public class ParallelHeapSort{
-    public static void sort(SortingObject[] arr) {
+    public static void sort(Product[] arr) {
 
     }
 }
