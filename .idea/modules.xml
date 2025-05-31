@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ParallelHeapSort.iml" filepath="$PROJECT_DIR$/ParallelHeapSort.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HeapSort.iml" filepath="$PROJECT_DIR$/HeapSort.iml" />
     </modules>
   </component>
 </project>
