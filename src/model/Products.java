@@ -24,10 +24,8 @@ public class Products {
     }
     public static boolean isSorted(Product[] products, Comparator<Product> comparator) {
         for (int i = 1; i < products.length; i++) {
-            if (comparator.compare(products[i], products[i - 1]) < 0) {
-//            if (products[i].compareTo(products[i - 1]) < 0) {
+            if (comparator.compare(products[i], products[i - 1]) < 0)
                 return false;
-            }
         }
         return true;
     }

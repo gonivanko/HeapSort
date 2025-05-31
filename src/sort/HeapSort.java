@@ -13,13 +13,11 @@ public class HeapSort{
 
         if (leftChildIndex < (len + offset)) {
             if (comparator.compare(arr[leftChildIndex], arr[maxIndex]) > 0) {
-//            if (arr[leftChildIndex].compareTo(arr[maxIndex]) > 0) {
                 maxIndex = leftChildIndex;
             }
         }
         if (rightChildIndex < (len + offset)) {
             if (comparator.compare(arr[rightChildIndex], arr[maxIndex]) > 0) {
-//            if (arr[rightChildIndex].compareTo(arr[maxIndex]) > 0) {
                 maxIndex = rightChildIndex;
             }
         }
@@ -48,7 +46,6 @@ public class HeapSort{
         int i = start, j = mid, k = 0;
         while (i < mid && j < end) {
             if (comparator.compare(arr[i], arr[j]) < 0) {
-//            if (arr[i].compareTo(arr[j]) < 0) {
                 temp[k++] = arr[i++];
             }
             else {
@@ -81,6 +78,5 @@ public class HeapSort{
             ForkJoinPool pool = new ForkJoinPool(poolSize);
             pool.invoke(new ParallelAction(arr, start, end, threshold, comparator));
         }
-
     }
 }

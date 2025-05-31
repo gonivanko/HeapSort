@@ -24,6 +24,8 @@ public class Main {
         String resultsPath = "output_data/speedtest_results.csv";
         String pythonScriptPath = "src/plot.py";
 
+        boolean displayPlots = false;
+
         int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(2)) + 1;
         Result[] results = new Result[resultsNumber];
         int testsNumber = 20;
@@ -35,16 +37,19 @@ public class Main {
             i++;
         }
 
+        Results.display(results);
+
         List<String[]> data = Results.getResultsStrList(results);
         CsvWriter.writeToCsv(resultsPath, data);
 
         String[] pythonArguments = {"python", pythonScriptPath, resultsPath};
-
-        try {
-            System.out.println("Running Python script...");
-            PythonRuner.main(pythonArguments);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        if (displayPlots) {
+            try {
+                System.out.println("Running Python script...");
+                PythonRuner.main(pythonArguments);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

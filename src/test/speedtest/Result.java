@@ -8,7 +8,7 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
         return getSpeedup() / poolSize;
     }
 
-    public static String getObjectsNumberString(int objectsNumber) {
+    public static String getNumberString(int objectsNumber) {
         String objectsNumberString;
         if (objectsNumber >= 1000_000_000)
             objectsNumberString = String.format("%4dB", objectsNumber / 1000_000_000);
@@ -32,7 +32,7 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
 
     @Override
     public String toString() {
-        return String.format("| %s | %9.2f | %9.2f | %7.2f | %10.2f |", getObjectsNumberString(objectsNumber), sequentialTime, parallelTime, getSpeedup(), getEfficiency());
+        return String.format("| %s | %9s | %9.2f | %9.2f | %7.2f | %10.2f | %9d |", getNumberString(objectsNumber), getNumberString(heapsortThreshold), sequentialTime, parallelTime, getSpeedup(), getEfficiency(), poolSize);
     }
 
 }

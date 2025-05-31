@@ -30,7 +30,7 @@ public class Results {
         );
     }
     public static void display(Result[] results) {
-        String header = "| Result # |   N   | Seq. time | Par. time | Speedup | Efficiency |";
+        String header = "| Result # |   N   | Threshold | Seq. time | Par. time | Speedup | Efficiency | Pool Size |";
         System.out.println("-".repeat(header.length()));
         System.out.println(header);
         System.out.println("-".repeat(header.length()));
@@ -41,7 +41,7 @@ public class Results {
     }
     public static List<String[]> getResultsStrList(Result[] results) {
         List<String[]> strResults = new ArrayList<>();
-        strResults.add(new String[] {"objects_number", "sequential_time", "parallel_time", "pool_size", "parallel_threshold"});
+        strResults.add(new String[] {"objects_number", "sequential_time", "parallel_time", "pool_size", "threshold"});
         for (Result result : results) {
             strResults.add(result.getStrArray());
         }
