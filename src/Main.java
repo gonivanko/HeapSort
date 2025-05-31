@@ -21,7 +21,7 @@ public class Main {
 
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
-        String resultsPath = "data/speedtest_results.csv";
+        String resultsPath = "output_data/speedtest_results.csv";
         String pythonScriptPath = "src/plot.py";
 
         int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(2)) + 1;

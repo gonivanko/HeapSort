@@ -25,7 +25,7 @@ public class SequentialMultitest {
 
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
-        String resultsPath = "data/sequential_results.csv";
+        String resultsPath = "output_data/sequential_results.csv";
         String pythonScriptPath = "src/plot.py";
 
 
