@@ -32,7 +32,7 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
 
     @Override
     public String toString() {
-        return String.format("| %s | %9s | %9.2f | %9.2f | %7.2f | %10.2f | %9d |", getNumberString(objectsNumber), getNumberString(heapsortThreshold), sequentialTime, parallelTime, getSpeedup(), getEfficiency(), poolSize);
+        return String.format("| %s | %9s | %9d | %9.2f | %9.2f | %7.2f | %10.2f |", getNumberString(objectsNumber), getNumberString(heapsortThreshold), poolSize, sequentialTime, parallelTime, getSpeedup(), getEfficiency());
     }
 
 }

@@ -1,8 +1,7 @@
-package test.sequential;
+package test.single_type;
 
 import model.Product;
 import model.ProductComparators;
-import test.speedtest.MultipleTests;
 import test.speedtest.Result;
 import test.speedtest.Results;
 import utils.PythonRuner;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
-public class SequentialMultitest {
+public class MultipleTests {
     public static void main(String[] args) {
         int poolSize = 12;
         int heapsortThreshold = 10_000;
@@ -34,7 +33,7 @@ public class SequentialMultitest {
         int testsNumber = 20;
         int i = 0;
         for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= 2) {
-            MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator, runSequential, runParallel);
+            test.speedtest.MultipleTests tests = new test.speedtest.MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator, runSequential, runParallel);
             tests.run();
             results[i] = tests.getAverageResult();
             i++;

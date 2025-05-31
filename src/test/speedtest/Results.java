@@ -30,7 +30,7 @@ public class Results {
         );
     }
     public static void display(Result[] results) {
-        String header = "| Result # |   N   | Threshold | Seq. time | Par. time | Speedup | Efficiency | Pool Size |";
+        String header = "| Result # |   N   | Threshold | Pool Size | Seq. time | Par. time | Speedup | Efficiency |";
         System.out.println("-".repeat(header.length()));
         System.out.println(header);
         System.out.println("-".repeat(header.length()));

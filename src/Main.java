@@ -16,25 +16,31 @@ public class Main {
         int poolSize = 12;
         int heapsortThreshold = 10_000;
 
-        int minObjects = 10_000;
-        int maxObjects = 160_000;
+        int minObjects = 100_000;
+        int maxObjects = 10_000_000;
+        int objectsMultiplier = 2;
+
+        int minPool = 4, maxPool = 12, poolIncrease = 4;
 
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
-        String resultsPath = "output_data/speedtest_results.csv";
+        String resultsPath = "output_data/speedtest_pool_results.csv";
         String pythonScriptPath = "src/plot.py";
 
-        boolean displayPlots = false;
+        boolean displayPlots = true;
 
-        int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(2)) + 1;
+        int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(objectsMultiplier)) + 1;
+        resultsNumber *= (maxPool - minPool) / poolIncrease + 1;
         Result[] results = new Result[resultsNumber];
         int testsNumber = 20;
         int i = 0;
-        for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= 2) {
-            MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator);
-            tests.run();
-            results[i] = tests.getAverageResult();
-            i++;
+        for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= objectsMultiplier) {
+            for (poolSize = minPool; poolSize <= maxPool; poolSize += poolIncrease) {
+                MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator);
+                tests.run();
+                results[i] = tests.getAverageResult();
+                i++;
+            }
         }
 
         Results.display(results);

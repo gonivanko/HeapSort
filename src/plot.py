@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-path = "data/speedtest_results.csv"
+path = "output_data/speedtest_results.csv"
 mode = 0
 
 if len(sys.argv) > 1:
@@ -31,7 +31,13 @@ if mode == 0:
     df['speedup'] = df['sequential_time'] / df['parallel_time']
     df['efficiency'] = df['speedup'] / df['pool_size']
 
-    display_plot(['speedup'], ['speedup'])
+    sns.lineplot(data=df, x='objects_number', y='parallel_time', hue='pool_size')
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
+
+    display_plot(['speedup'], ['efficiency'])
+
     display_plot(['efficiency'], ['efficiency'])
 else:
     display_plot(['sequential_time'], ['sequential'], True)
