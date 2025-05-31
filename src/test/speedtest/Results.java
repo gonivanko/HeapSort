@@ -4,46 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Results {
-    public static boolean allAreSorted(ComparativeResult[] comparativeResults) {
-        for (ComparativeResult comparativeResult : comparativeResults) {
-            if (!comparativeResult.sorted()) return false;
+    public static boolean allAreSorted(Result[] results) {
+        for (Result result : results) {
+            if (!result.sorted()) return false;
         }
         return true;
     }
-    public static double avgSequentialTime(ComparativeResult[] comparativeResults) {
+    public static double avgSequentialTime(Result[] results) {
         double avg = 0;
-        for (ComparativeResult comparativeResult : comparativeResults) {
-            avg += comparativeResult.sequentialTime();
+        for (Result result : results) {
+            avg += result.sequentialTime();
         }
-        return avg / comparativeResults.length;
+        return avg / results.length;
     }
-    public static double avgParallelTime(ComparativeResult[] comparativeResults) {
+    public static double avgParallelTime(Result[] results) {
         double avg = 0;
-        for (ComparativeResult comparativeResult : comparativeResults) {
-            avg += comparativeResult.parallelTime();
+        for (Result result : results) {
+            avg += result.parallelTime();
         }
-        return avg / comparativeResults.length;
+        return avg / results.length;
     }
-    public static ComparativeResult getAverageResult(ComparativeResult[] comparativeResults) {
-        return new ComparativeResult(
-                comparativeResults[0].objectsNumber(), avgSequentialTime(comparativeResults), avgParallelTime(comparativeResults), allAreSorted(comparativeResults), comparativeResults[0].poolSize(), comparativeResults[0].heapsortThreshold()
+    public static Result getAverageResult(Result[] results) {
+        return new Result(
+                results[0].objectsNumber(), avgSequentialTime(results), avgParallelTime(results), allAreSorted(results), results[0].poolSize(), results[0].heapsortThreshold()
         );
     }
-    public static void display(ComparativeResult[] comparativeResults) {
+    public static void display(Result[] results) {
         String header = "| Result # |   N   | Seq. time | Par. time | Speedup | Efficiency |";
         System.out.println("-".repeat(header.length()));
         System.out.println(header);
         System.out.println("-".repeat(header.length()));
-        for (int i = 0; i < comparativeResults.length; i++) {
-            System.out.printf("| %8d %s\n", (i+1), comparativeResults[i]);
+        for (int i = 0; i < results.length; i++) {
+            System.out.printf("| %8d %s\n", (i+1), results[i]);
         }
         System.out.println("-".repeat(header.length()));
     }
-    public static List<String[]> getResultsStrList(ComparativeResult[] comparativeResults) {
+    public static List<String[]> getResultsStrList(Result[] results) {
         List<String[]> strResults = new ArrayList<>();
         strResults.add(new String[] {"objects_number", "sequential_time", "parallel_time", "pool_size", "parallel_threshold"});
-        for (ComparativeResult comparativeResult : comparativeResults) {
-            strResults.add(comparativeResult.getStrArray());
+        for (Result result : results) {
+            strResults.add(result.getStrArray());
         }
         return strResults;
     }

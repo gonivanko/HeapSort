@@ -17,12 +17,12 @@ public class MultipleTests {
 
     private final Comparator<Product> comparator;
 
-    private final ComparativeResult[] comparativeResults;
+    private final Result[] results;
 
     public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<Product> comparator) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
-        comparativeResults = new ComparativeResult[testsNumber];
+        results = new Result[testsNumber];
         this.poolSize = poolSize;
         this.heapsortThreshold = heapsortThreshold;
         this.comparator = comparator;
@@ -30,7 +30,7 @@ public class MultipleTests {
     public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<Product> comparator, boolean runSequential, boolean runParallel) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
-        comparativeResults = new ComparativeResult[testsNumber];
+        results = new Result[testsNumber];
         this.poolSize = poolSize;
         this.heapsortThreshold = heapsortThreshold;
         this.comparator = comparator;
@@ -45,7 +45,7 @@ public class MultipleTests {
         for (int i = 0; i < testsNumber; i++) {
             Speedtest sequentialTest, parallelTest;
             boolean isSortedSequential = true, isSortedParallel = true;
-            double sequentialTime = 0, parallelTime = 0;
+            double sequentialTime = -1, parallelTime = -1;
             if (runSequential) {
                 sequentialTest = new Speedtest(objectsNumber, false, comparator);
                 sequentialTest.run();
@@ -60,13 +60,13 @@ public class MultipleTests {
                 isSortedParallel = parallelTest.isSorted();
             }
 
-            comparativeResults[i] = new ComparativeResult(
+            results[i] = new Result(
                     objectsNumber, sequentialTime, parallelTime,
                     isSortedSequential && isSortedParallel, poolSize, heapsortThreshold
             );
-            System.out.printf("Test #%d\r", (i + 1));
+            System.out.printf("Test #%d, objects: %d\r", (i + 1), objectsNumber);
         }
-        if (allAreSorted(comparativeResults)) {
+        if (allAreSorted(results)) {
             System.out.println("All are sorted");
         }
         else {
@@ -74,10 +74,10 @@ public class MultipleTests {
         }
 
     }
-    public ComparativeResult[] getResults() {
-        return comparativeResults;
+    public Result[] getResults() {
+        return results;
     }
-    public ComparativeResult getAverageResult() {
-        return Results.getAverageResult(comparativeResults);
+    public Result getAverageResult() {
+        return Results.getAverageResult(results);
     }
 }

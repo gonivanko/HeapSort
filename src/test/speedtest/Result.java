@@ -1,6 +1,6 @@
 package test.speedtest;
 
-public record ComparativeResult(int objectsNumber, double sequentialTime, double parallelTime, boolean sorted, int poolSize, int heapsortThreshold) {
+public record Result(int objectsNumber, double sequentialTime, double parallelTime, boolean sorted, int poolSize, int heapsortThreshold) {
     public double getSpeedup() {
         return sequentialTime / parallelTime;
     }

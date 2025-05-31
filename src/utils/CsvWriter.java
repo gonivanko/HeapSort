@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class WriteToCSV {
+public class CsvWriter {
     public static void writeToCsv(String filePath, List<String[]> data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String[] row : data) {
