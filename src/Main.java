@@ -9,14 +9,15 @@ import utils.CsvWriter;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) {
-
+        Locale.setDefault(Locale.US);
         int poolSize = 12;
         int heapsortThreshold = 10_000;
 
-        int minObjects = 100_000;
+        int minObjects = 50_000;
         int maxObjects = 10_000_000;
         int objectsMultiplier = 2;
 
@@ -25,7 +26,7 @@ public class Main {
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
         String resultsPath = "output_data/speedtest_pool_results.csv";
-        String pythonScriptPath = "src/plot.py";
+        String pythonScriptPath = "src/script.py";
 
         boolean displayPlots = true;
 

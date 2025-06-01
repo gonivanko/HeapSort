@@ -23,8 +23,8 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
     public String[] getStrArray() {
         String[] strArray = new String[5];
         strArray[0] = String.valueOf(objectsNumber);
-        strArray[1] = String.valueOf(sequentialTime);
-        strArray[2] = String.valueOf(parallelTime);
+        strArray[1] = String.format("%.2f", sequentialTime);
+        strArray[2] = String.format("%.2f", parallelTime);
         strArray[3] = String.valueOf(poolSize);
         strArray[4] = String.valueOf(heapsortThreshold);
         return strArray;

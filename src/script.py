@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-path = "output_data/speedtest_results.csv"
+path = "output_data/speedtest_pool_results.csv"
+output_path = "output_data/speedtest_pool_results_processed.csv"
 mode = 0
 
 if len(sys.argv) > 1:
@@ -28,17 +29,21 @@ def display_plot(y_values, labels, y_log=False, x_log=True):
 
 if mode == 0:
     display_plot(['sequential_time', 'parallel_time'], ['sequential', 'parallel'], y_log=True)
-    df['speedup'] = df['sequential_time'] / df['parallel_time']
-    df['efficiency'] = df['speedup'] / df['pool_size']
 
     sns.lineplot(data=df, x='objects_number', y='parallel_time', hue='pool_size')
     plt.xscale('log')
     plt.yscale('log')
     plt.show()
 
-    display_plot(['speedup'], ['efficiency'])
+    df['speedup'] = df['sequential_time'] / df['parallel_time']
+    df['efficiency'] = df['speedup'] / df['pool_size']
 
-    display_plot(['efficiency'], ['efficiency'])
+    display_plot(['speedup'], [''])
+    display_plot(['efficiency'], [''])
+
+    new_df = df[['objects_number', 'sequential_time', 'parallel_time', 'pool_size', 'speedup', 'efficiency']]
+    new_df = new_df.reindex(columns=['objects_number', 'sequential_time', 'parallel_time', 'speedup', 'pool_size', 'efficiency'])
+    new_df.to_csv(output_path, index=False, float_format='%.2f', sep=';', decimal=',')
 else:
     display_plot(['sequential_time'], ['sequential'], True)
 

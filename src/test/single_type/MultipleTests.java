@@ -25,7 +25,7 @@ public class MultipleTests {
         Comparator<Product> comparator = ProductComparators.BY_PRICE;
 
         String resultsPath = "output_data/sequential_results.csv";
-        String pythonScriptPath = "src/plot.py";
+        String pythonScriptPath = "src/script.py";
 
 
         int resultsNumber = (int) (Math.log10((double) maxObjects / minObjects) / Math.log10(2)) + 1;
