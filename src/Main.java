@@ -43,7 +43,6 @@ public class Main {
                 i++;
             }
         }
-
         Results.display(results);
 
         List<String[]> data = Results.getResultsStrList(results);

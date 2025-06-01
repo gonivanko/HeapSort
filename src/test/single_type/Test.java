@@ -7,7 +7,7 @@ import sort.HeapSort;
 
 import java.util.Comparator;
 
-public class SingleTest {
+public class Test {
     public static void main(String[] args) {
 
         int objectsNumber = 10;
@@ -28,7 +28,5 @@ public class SingleTest {
 
         boolean isSorted = Products.isSorted(products, comparator);
         System.out.println("Is sorted: " + isSorted);
-
-
     }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
-public class MultipleTests {
+public class Tests {
     public static void main(String[] args) {
         int poolSize = 12;
         int heapsortThreshold = 10_000;

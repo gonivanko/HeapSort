@@ -14,11 +14,6 @@ public class Speedtest {
     private boolean isSorted = false;
     private int poolSize = 12;
     private int heapsortThreshold = 10_000;
-    public Speedtest(int objectsNumber, Comparator<Product> comparator) {
-        this.objectsNumber = objectsNumber;
-        this.comparator = comparator;
-        this.isParallel = false;
-    }
     public Speedtest(int objectsNumber, boolean isParallel, Comparator<Product> comparator) {
         this.objectsNumber = objectsNumber;
         this.isParallel = isParallel;
@@ -45,7 +40,6 @@ public class Speedtest {
 
         sortingTimeNs = endTime - startTime;
         isSorted = Products.isSorted(products, comparator);
-//        System.out.println("Is Sorted: " + isSorted);
 
     }
     public long getSortingTimeNs() {
