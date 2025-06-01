@@ -39,6 +39,16 @@ public class Results {
         }
         System.out.println("-".repeat(header.length()));
     }
+    public static void displaySequential(Result[] results) {
+        String header = "| Result # |   N   | Threshold | Seq. time |";
+        System.out.println("-".repeat(header.length()));
+        System.out.println(header);
+        System.out.println("-".repeat(header.length()));
+        for (int i = 0; i < results.length; i++) {
+            System.out.printf("| %8d %s\n", (i+1), results[i].sequentialOnly());
+        }
+        System.out.println("-".repeat(header.length()));
+    }
     public static List<String[]> getResultsStrList(Result[] results) {
         List<String[]> strResults = new ArrayList<>();
         strResults.add(new String[] {"objects_number", "sequential_time", "parallel_time", "pool_size", "threshold"});

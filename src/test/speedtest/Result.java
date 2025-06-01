@@ -35,4 +35,8 @@ public record Result(int objectsNumber, double sequentialTime, double parallelTi
         return String.format("| %s | %9s | %9d | %9.2f | %9.2f | %7.2f | %10.2f |", getNumberString(objectsNumber), getNumberString(heapsortThreshold), poolSize, sequentialTime, parallelTime, getSpeedup(), getEfficiency());
     }
 
+    public String sequentialOnly() {
+        return String.format("| %s | %9s | %9.2f |", getNumberString(objectsNumber), getNumberString(heapsortThreshold), sequentialTime);
+    }
+
 }

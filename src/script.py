@@ -17,6 +17,8 @@ if len(sys.argv) > 1:
 if len(sys.argv) > 2:
     mode = int(sys.argv[2])
 
+print("Mode:", mode)
+
 df = pd.read_csv(path)
 
 def display_plot(y_values, labels, y_log=False, x_log=True):
@@ -45,5 +47,9 @@ if mode == 0:
     new_df = new_df.reindex(columns=['objects_number', 'sequential_time', 'parallel_time', 'speedup', 'pool_size', 'efficiency'])
     new_df.to_csv(output_path, index=False, float_format='%.2f', sep=';', decimal=',')
 else:
-    display_plot(['sequential_time'], ['sequential'], True)
+    pal = sns.color_palette("tab10")
+    sns.lineplot(data=df, x='objects_number', y='sequential_time', hue='threshold', palette=pal)
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
 
