@@ -18,7 +18,7 @@ public class Main {
         int heapsortThreshold = 10_000;
 
         int minObjects = 50_000;
-        int maxObjects = 10_000_000;
+        int maxObjects = 100_000;
         int objectsMultiplier = 2;
 
         int minPool = 4, maxPool = 12, poolIncrease = 4;
@@ -37,7 +37,7 @@ public class Main {
         int i = 0;
         for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= objectsMultiplier) {
             for (poolSize = minPool; poolSize <= maxPool; poolSize += poolIncrease) {
-                MultipleTests tests = new MultipleTests(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator);
+                MultipleTests<Product> tests = new MultipleTests<>(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator);
                 tests.run();
                 results[i] = tests.getAverageResult();
                 i++;

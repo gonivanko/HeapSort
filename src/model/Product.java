@@ -25,7 +25,10 @@ public class Product implements Comparable<Product> {
         return Integer.compare(this.centsPrice, o.centsPrice);
     }
     public String toString() {
-        return String.format("Name: %8s, int: %2d, double: %2.2f", name, centsPrice, weight);
+        String[] headerArray = SortingObjects.getHeaderArray(this);
+
+        return String.format("%8s | int: %2d | %2.2f", name, centsPrice, weight);
+//        return String.format("Name: %8s, int: %2d, double: %2.2f", name, centsPrice, weight);
     }
     public static Product createRandom() {
         String[] productNames = {"Milk", "Bread", "Cheese", "Apple", "Banana"};

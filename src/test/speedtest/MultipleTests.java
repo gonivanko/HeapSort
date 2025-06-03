@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 import static test.speedtest.Results.allAreSorted;
 
-public class MultipleTests {
+public class MultipleTests<T> {
     private final int objectsNumber;
     private final int testsNumber;
     private final int poolSize;
@@ -15,11 +15,11 @@ public class MultipleTests {
     boolean runSequential = true;
     boolean runParallel = true;
 
-    private final Comparator<Product> comparator;
+    private final Comparator<T> comparator;
 
     private final Result[] results;
 
-    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<Product> comparator) {
+    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
         results = new Result[testsNumber];
@@ -27,7 +27,7 @@ public class MultipleTests {
         this.heapsortThreshold = heapsortThreshold;
         this.comparator = comparator;
     }
-    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<Product> comparator, boolean runSequential, boolean runParallel) {
+    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator, boolean runSequential, boolean runParallel) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
         results = new Result[testsNumber];
@@ -43,18 +43,18 @@ public class MultipleTests {
             return;
         }
         for (int i = 0; i < testsNumber; i++) {
-            Speedtest sequentialTest, parallelTest;
+            Speedtest<T> sequentialTest, parallelTest;
             boolean isSortedSequential = true, isSortedParallel = true;
             double sequentialTime = -1, parallelTime = -1;
             if (runSequential) {
-                sequentialTest = new Speedtest(objectsNumber, false, comparator);
+                sequentialTest = new Speedtest<T>(objectsNumber, false, comparator);
                 sequentialTest.run();
                 sequentialTime = sequentialTest.getSortingTimeMs();
                 isSortedSequential = sequentialTest.isSorted();
             }
 
             if (runParallel) {
-                parallelTest = new Speedtest(objectsNumber, true, comparator, poolSize, heapsortThreshold);
+                parallelTest = new Speedtest<T>(objectsNumber, true, comparator, poolSize, heapsortThreshold);
                 parallelTest.run();
                 parallelTime = parallelTest.getSortingTimeMs();
                 isSortedParallel = parallelTest.isSorted();

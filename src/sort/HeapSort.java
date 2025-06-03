@@ -5,8 +5,8 @@ import model.Product;
 import java.util.Comparator;
 import java.util.concurrent.ForkJoinPool;
 
-public class HeapSort{
-    public static void heapify(Product[] arr, int index, int len, int offset, Comparator<Product> comparator) {
+public class HeapSort<T>{
+    public void heapify(T[] arr, int index, int len, int offset, Comparator<T> comparator) {
         int maxIndex = index;
         int leftChildIndex = offset + (index - offset) * 2 + 1;
         int rightChildIndex = offset + (index - offset) * 2 + 2;
@@ -22,27 +22,27 @@ public class HeapSort{
             }
         }
         if (maxIndex != index) {
-            Product temp = arr[index];
+            T temp = arr[index];
             arr[index] = arr[maxIndex];
             arr[maxIndex] = temp;
             heapify(arr, maxIndex, len, offset, comparator);
         }
     }
-    public static void sort(Product[] arr, int start, int end, Comparator<Product> comparator) {
+    public void sort(T[] arr, int start, int end, Comparator<T> comparator) {
         int arrayLength = end - start;
         for (int i = start + arrayLength / 2 - 1; i >= start; i--) {
             heapify(arr, i, arrayLength, start, comparator);
         }
         for (int i = start + arrayLength - 1; i >= start; i--) {
-            Product temp = arr[i];
+            T temp = arr[i];
             arr[i] = arr[start];
             arr[start] = temp;
             heapify(arr, start, i - start, start, comparator);
         }
     }
-    public static void merge(Product[] arr, int start, int mid, int end, Comparator<Product> comparator) {
+    public void merge(T[] arr, int start, int mid, int end, Comparator<T> comparator) {
         int arrayLength = end - start;
-        Product[] temp = new Product[arrayLength];
+        T[] temp = (T[]) new Object[arrayLength];
         int i = start, j = mid, k = 0;
         while (i < mid && j < end) {
             if (comparator.compare(arr[i], arr[j]) < 0) {
@@ -60,7 +60,7 @@ public class HeapSort{
         }
         System.arraycopy(temp, 0, arr, start, temp.length);
     }
-    public static void sequentialSort(Product[] arr, int start, int end, int threshold, Comparator<Product> comparator) {
+    public void sequentialSort(T[] arr, int start, int end, int threshold, Comparator<T> comparator) {
         int arrayLength = end - start;
 
         if (arrayLength < threshold) {
@@ -73,10 +73,10 @@ public class HeapSort{
             merge(arr, start, mid, end, comparator);
         }
     }
-    public static void parallelSort(Product[] arr, int start, int end, int poolSize, int threshold, Comparator<Product> comparator) {
+    public void parallelSort(T[] arr, int start, int end, int poolSize, int threshold, Comparator<T> comparator) {
         if (poolSize > 1) {
             ForkJoinPool pool = new ForkJoinPool(poolSize);
-            pool.invoke(new ParallelAction(arr, start, end, threshold, comparator));
+            pool.invoke(new ParallelAction<T>(arr, start, end, threshold, comparator));
         }
     }
 }
