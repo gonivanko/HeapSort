@@ -1,8 +1,8 @@
 package test.speedtest;
 
-import model.Product;
-
 import java.util.Comparator;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 import static test.speedtest.Results.allAreSorted;
 
@@ -15,27 +15,38 @@ public class MultipleTests<T> {
     boolean runSequential = true;
     boolean runParallel = true;
 
-    private final Comparator<T> comparator;
-
     private final Result[] results;
 
-    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator) {
+    private final Comparator<T> comparator;
+    private final Supplier<T> generator;
+    private final IntFunction<T[]> arrayFactory;
+
+
+
+    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator, Supplier<T> generator, IntFunction<T[]> arrayFactory) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
         results = new Result[testsNumber];
         this.poolSize = poolSize;
         this.heapsortThreshold = heapsortThreshold;
+
         this.comparator = comparator;
+        this.generator = generator;
+        this.arrayFactory = arrayFactory;
     }
-    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator, boolean runSequential, boolean runParallel) {
+    public MultipleTests(int objectsNumber, int testsNumber, int poolSize, int heapsortThreshold, Comparator<T> comparator, boolean runSequential, boolean runParallel, Supplier<T> generator, IntFunction<T[]> arrayFactory) {
         this.objectsNumber = objectsNumber;
         this.testsNumber = testsNumber;
         results = new Result[testsNumber];
         this.poolSize = poolSize;
         this.heapsortThreshold = heapsortThreshold;
-        this.comparator = comparator;
+
         this.runSequential = runSequential;
         this.runParallel = runParallel;
+
+        this.comparator = comparator;
+        this.generator = generator;
+        this.arrayFactory = arrayFactory;
     }
     public void run() {
         if (!(runSequential || runParallel)) {
@@ -47,14 +58,14 @@ public class MultipleTests<T> {
             boolean isSortedSequential = true, isSortedParallel = true;
             double sequentialTime = -1, parallelTime = -1;
             if (runSequential) {
-                sequentialTest = new Speedtest<T>(objectsNumber, false, comparator);
+                sequentialTest = new Speedtest<T>(objectsNumber, false, comparator, generator, arrayFactory);
                 sequentialTest.run();
                 sequentialTime = sequentialTest.getSortingTimeMs();
                 isSortedSequential = sequentialTest.isSorted();
             }
 
             if (runParallel) {
-                parallelTest = new Speedtest<T>(objectsNumber, true, comparator, poolSize, heapsortThreshold);
+                parallelTest = new Speedtest<T>(objectsNumber, true, comparator, poolSize, heapsortThreshold, generator, arrayFactory);
                 parallelTest.run();
                 parallelTime = parallelTest.getSortingTimeMs();
                 isSortedParallel = parallelTest.isSorted();

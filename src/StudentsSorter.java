@@ -1,10 +1,10 @@
-import model.product.Product;
-import model.product.ProductComparators;
+import model.student.Student;
+import model.student.StudentComparators;
 import test.speedtest.MultipleTests;
 import test.speedtest.Result;
 import test.speedtest.Results;
-import utils.PythonRuner;
 import utils.CsvWriter;
+import utils.PythonRuner;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -13,7 +13,7 @@ import java.util.Locale;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
-public class Main {
+public class StudentsSorter {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         int poolSize = 12;
@@ -25,9 +25,9 @@ public class Main {
 
         int minPool = 4, maxPool = 12, poolIncrease = 4;
 
-        Comparator<Product> comparator = ProductComparators.BY_PRICE;
-        Supplier<Product> generator = Product::createRandom;
-        IntFunction<Product[]> arrayFactory = Product[]::new;
+        Comparator<Student> comparator = StudentComparators.BY_GROUP_NAME;
+        Supplier<Student> generator = Student::createRandom;
+        IntFunction<Student[]> arrayFactory = Student[]::new;
 
         String resultsPath = "output_data/speedtest_pool_results.csv";
         String pythonScriptPath = "src/script.py";
@@ -41,7 +41,7 @@ public class Main {
         int i = 0;
         for (int objectsNumber = minObjects; objectsNumber <= maxObjects; objectsNumber *= objectsMultiplier) {
             for (poolSize = minPool; poolSize <= maxPool; poolSize += poolIncrease) {
-                MultipleTests<Product> tests = new MultipleTests<>(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator, generator, arrayFactory);
+                MultipleTests<Student> tests = new MultipleTests<>(objectsNumber, testsNumber, poolSize, heapsortThreshold, comparator, generator, arrayFactory);
                 tests.run();
                 results[i] = tests.getAverageResult();
                 i++;

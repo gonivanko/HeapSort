@@ -1,34 +1,45 @@
 package test.speedtest;
 
-import model.Product;
-import model.Products;
+import model.SortingObjects;
 import sort.HeapSort;
 
 import java.util.Comparator;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 public class Speedtest<T> {
     private final int objectsNumber;
     private final boolean isParallel;
-    private final Comparator<T> comparator;
+
     private long sortingTimeNs = 0;
     private boolean isSorted = false;
     private int poolSize = 12;
     private int heapsortThreshold = 10_000;
-    public Speedtest(int objectsNumber, boolean isParallel, Comparator<T> comparator) {
+
+    private final Comparator<T> comparator;
+    private final Supplier<T> generator;
+    private final IntFunction<T[]> arrayFactory;
+
+
+    public Speedtest(int objectsNumber, boolean isParallel, Comparator<T> comparator, Supplier<T> generator, IntFunction<T[]> arrayFactory) {
         this.objectsNumber = objectsNumber;
         this.isParallel = isParallel;
         this.comparator = comparator;
+        this.generator = generator;
+        this.arrayFactory = arrayFactory;
     }
-    public Speedtest(int objectsNumber, boolean isParallel, Comparator<T> comparator, int poolSize, int heapsortThreshold) {
+    public Speedtest(int objectsNumber, boolean isParallel, Comparator<T> comparator, int poolSize, int heapsortThreshold, Supplier<T> generator, IntFunction<T[]> arrayFactory) {
         this.objectsNumber = objectsNumber;
         this.isParallel = isParallel;
         this.comparator = comparator;
         this.poolSize = poolSize;
         this.heapsortThreshold = heapsortThreshold;
+        this.generator = generator;
+        this.arrayFactory = arrayFactory;
     }
 
     public void run() {
-        T[] products = (T[]) Products.createRandom(objectsNumber);
+        T[] products = SortingObjects.createRandomArray(objectsNumber, generator, arrayFactory);
         long startTime = System.nanoTime();
         HeapSort<T> sorter = new HeapSort<T>();
         if (isParallel) {
@@ -40,7 +51,7 @@ public class Speedtest<T> {
         long endTime = System.nanoTime();
 
         sortingTimeNs = endTime - startTime;
-        isSorted = Products.isSorted(products, comparator);
+        isSorted = SortingObjects.isSorted(products, comparator);
 
     }
     public long getSortingTimeNs() {

@@ -1,7 +1,5 @@
 package sort;
 
-import model.Product;
-
 import java.util.Comparator;
 import java.util.concurrent.RecursiveAction;
 
